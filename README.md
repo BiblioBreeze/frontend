@@ -10,6 +10,12 @@ Implements BiblioBreeze frontend.
 yarn
 ```
 
+### Configure
+Create `.env.local` with content:
+```shell
+VITE_MAPS_API_KEY=<KEY>
+```
+
 ### Run
 
 ```shell

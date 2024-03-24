@@ -41,6 +41,7 @@ jobs:
           export VERSION="$(date '+%Y.%-m.')"${{ github.run_id }}
           
           docker buildx build . \
+          --build-arg VITE_MAPS_API_KEY=${{ secrets.MAPS_API_KEY }} \
           --platform linux/amd64,linux/arm64 \
           --tag ghcr.io/bibliobreeze/${{ github.event.repository.name }}:$VERSION \
           --push
