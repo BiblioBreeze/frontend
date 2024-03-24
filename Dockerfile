@@ -9,6 +9,8 @@ RUN yarn install
 
 COPY . .
 
+ARG VITE_MAPS_API_KEY
+
 RUN yarn build
 
 FROM nginxinc/nginx-unprivileged:1.25 AS build-release-stage
