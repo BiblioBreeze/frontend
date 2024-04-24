@@ -1,18 +1,26 @@
 import {load as loadMapGL} from '@2gis/mapgl';
 import {Map as TMap, Marker as TMarker} from '@2gis/mapgl/types';
 import React, {useEffect} from "react";
-import userIcon from "./assets/icons/user_at_map.svg"
 
 export interface Point {
     longitude: number
     latitude: number
 }
 
-interface MapProps {
-    onMarkerPut?: (point: Point) => void
+interface MarkerProps<DataT> {
+    point: Point
+    icon?: string,
+    data?: DataT,
+    onClick?: (data: DataT) => void
 }
 
-export const Map = (props: MapProps) => {
+interface MapProps<MarkerPropsDataT> {
+    userIcon: string
+    onMarkerPut?: (point: Point) => void
+    markers?: [MarkerProps<MarkerPropsDataT>]
+}
+
+export const Map = <MarkerPropsDataT = string, >(props: MapProps<MarkerPropsDataT>) => {
     useEffect(() => {
         let map: TMap;
 
@@ -23,6 +31,18 @@ export const Map = (props: MapProps) => {
                 key: import.meta.env.VITE_MAPS_API_KEY
             });
 
+            props.markers?.forEach((markerProps) => {
+                const marker = new mapglAPI.Marker(map, {
+                    coordinates: [markerProps.point.longitude, markerProps.point.latitude],
+                    icon: markerProps.icon,
+                    userData: markerProps.data,
+                })
+
+                marker.on('click', (e) => {
+                    markerProps.onClick?.(e.targetData.userData)
+                })
+            })
+
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (success) => {
@@ -31,7 +51,7 @@ export const Map = (props: MapProps) => {
                         map.setCenter(coords)
                         new mapglAPI.Marker(map, {
                             coordinates: coords,
-                            icon: userIcon,
+                            icon: props.userIcon,
                         })
                     },
                 )

@@ -3,6 +3,7 @@ import reactLogo from './assets/icons/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import {Map, Point} from "./Map.tsx";
+import userIcon from "./assets/icons/user_at_map.svg"
 
 function App() {
     const [count, setCount] = useState(0)
@@ -34,7 +35,25 @@ function App() {
                 Click on the Vite and React logos to learn more
             </p>
             <div style={{width: '100%', height: 400}}>
-                <Map onMarkerPut={onMarkerPut}/>
+                <Map
+                    userIcon={userIcon}
+                    onMarkerPut={onMarkerPut}
+                    markers={
+                        [
+                            {
+                                point: {
+                                    longitude: 55.31878,
+                                    latitude: 25.23584
+                                },
+                                icon: viteLogo,
+                                data: 1,
+                                onClick: (data) => {
+                                    console.log(data)
+                                }
+                            }
+                        ]
+                    }
+                />
             </div>
         </>
     )
