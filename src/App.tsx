@@ -36,6 +36,13 @@ function App() {
             </p>
             <div style={{width: '100%', height: 400}}>
                 <Map
+                    defaultPosition={
+                        {
+                            longitude: 55.31878,
+                            latitude: 25.23584
+                        }
+                    }
+                    defaultZoom={15}
                     userIcon={userIcon}
                     onMarkerPut={onMarkerPut}
                     markers={

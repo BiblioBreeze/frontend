@@ -15,6 +15,8 @@ interface MarkerProps<DataT> {
 }
 
 interface MapProps<MarkerPropsDataT> {
+    defaultPosition: Point
+    defaultZoom: number
     userIcon: string
     onMarkerPut?: (point: Point) => void
     markers?: [MarkerProps<MarkerPropsDataT>]
@@ -26,8 +28,8 @@ export const Map = <MarkerPropsDataT = string, >(props: MapProps<MarkerPropsData
 
         loadMapGL().then((mapglAPI) => {
             map = new mapglAPI.Map('map-container', {
-                center: [55.31878, 25.23584],
-                zoom: 15,
+                center: [props.defaultPosition.longitude, props.defaultPosition.latitude],
+                zoom: props.defaultZoom,
                 key: import.meta.env.VITE_MAPS_API_KEY
             });
 
