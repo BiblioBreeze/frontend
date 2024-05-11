@@ -1,68 +1,20 @@
-import {useState} from 'react'
-import reactLogo from './assets/icons/react.svg'
-import viteLogo from '/vite.svg'
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import './App.css'
-import {Map, Point} from "./Map.tsx";
-import userIcon from "./assets/icons/user_at_map.svg"
+import Layout from "./pages/Layout.tsx";
+import {NotFound} from "./pages/NotFound.tsx";
+import {Register} from "./pages/Register.tsx";
 
 function App() {
-    const [count, setCount] = useState(0)
-
-    function onMarkerPut(ev: Point) {
-        console.log(ev)
-    }
-
     return (
-        <>
-            <div>
-                <a href="https://vitejs.dev" target="_blank">
-                    <img src={viteLogo} className="logo" alt="Vite logo"/>
-                </a>
-                <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} className="logo react" alt="React logo"/>
-                </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <button onClick={() => setCount((count) => count + 1)}>
-                    count is {count}
-                </button>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more
-            </p>
-            <div style={{width: '100%', height: 400}}>
-                <Map
-                    defaultPosition={
-                        {
-                            longitude: 55.31878,
-                            latitude: 25.23584
-                        }
-                    }
-                    defaultZoom={15}
-                    userIcon={userIcon}
-                    onMarkerPut={onMarkerPut}
-                    markers={
-                        [
-                            {
-                                point: {
-                                    longitude: 55.31878,
-                                    latitude: 25.23584
-                                },
-                                icon: viteLogo,
-                                data: 1,
-                                onClick: (data) => {
-                                    console.log(data)
-                                }
-                            }
-                        ]
-                    }
-                />
-            </div>
-        </>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Layout/>}>
+                    {/*<Route index element={<Home />} />*/}
+                    <Route path="register" element={<Register/>}/>
+                    <Route path="*" element={<NotFound/>}/>
+                </Route>
+            </Routes>
+        </BrowserRouter>
     )
 }
 
